@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  Alert,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -28,6 +29,14 @@ export default function Ad({navigation}) {
   const [content, setcontent] = React.useState('');
   const [loading, setloading] = React.useState(false);
   const [msg, setmsg] = React.useState('');
+  const [singleFile, setSingleFile] = React.useState([]);
+  const [url, setUrl] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [images, setImages] = React.useState([]);
+  const [images2, setImages2] = React.useState([]);
+  const [images3, setImages3] = React.useState([]);
+  const [images4, setImages4] = React.useState([]);
+  const [images5, setImages5] = React.useState([]);
 
   const [i1, seti1] = React.useState(
     'https://outbackcleaningproducts.com.au/wp-content/uploads/2021/11/1200px-Picture_icon_BLACK.svg_.png',
@@ -50,157 +59,399 @@ export default function Ad({navigation}) {
   const [img4, setimg4] = React.useState({});
   const [img5, setimg5] = React.useState({});
 
-  const PostAd = async () => {
-    // setloading(true);
-    setmsg('');
-    // let data = {}
-    // data['title'] = title
-    // data['category'] = category
-    // data['sub_category'] = subcategory
-    // data['content'] = content
-    // data['phone'] = phone
-    // data['whatsapp'] = whatsapp
-    // data['country'] = country
-    // data['author'] = author
-    // data['img'] = imgPayload
-    // data['img2'] = img
-    // data['img3'] = img
-    // data['img4'] = img
-    // data['img5'] = img
-    let formData = new FormData();
-    formData.append('title', title);
-    formData.append('category', category);
-    formData.append('sub_category', subcategory);
-    formData.append('content', content);
-    formData.append('phone', phone);
-    formData.append('whatsapp', whatsapp);
-    formData.append('country', country);
-    formData.append('author', author);
-    formData.append('img', {
-      uri: img.path,
-      name: new Date().getTime().toString() + '.png',
-      type: 'image/png',
-    });
-    formData.append('img2', {
-      uri: img2.path,
-      name: new Date().getTime().toString() + '.png',
-      type: 'image/png',
-    });
-    formData.append('img3', {
-      uri: img3.path,
-      name: new Date().getTime().toString() + '.png',
-      type: 'image/png',
-    });
-    formData.append('img4', {
-      uri: img4.path,
-      name: new Date().getTime().toString() + '.png',
-      type: 'image/png',
-    });
-    formData.append('img5', {
-      uri: img5.path,
-      name: new Date().getTime().toString() + '.png',
-      type: 'image/png',
-    });
+  // const PostAd = async () => {
+  //   let formData = new FormData();
 
-    console.log('Dataaa===========>>>>>', formData);
+  //   formData.append('title', 'incidentReport');
+  //   formData.append('category', 'date');
+  //   formData.append('sub_category', 'times');
+  //   formData.append('content', 'dropDown');
+  //   formData.append('phone', 'multiLineText');
+  //   formData.append('whatsapp', 'location');
+  //   formData.append('country', 'actions');
+  //   formData.append('result', 'results');
+  //   formData.append('longitude', 'long');
+  //   formData.append('img', singleFile);
 
-    fetch('https://www.jeemjam.com/api/createPost', {
-      Method: 'POST',
-      Headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-      Body: formData,
-    })
-      .then(res => {
-        console.log('post response: ' + JSON.stringify(res));
-        console.log(res.data.message);
-        // if (
-        //   res.data.message ==
-        //   'Post added and sent for approval .It will be live after getting approved'
-        // ) {
-        //   setloading(false);
-        //   alert(res.data.message);
-        //   navigation.navigate('PostAd');
-        // } else {
-        //   setmsg(res.data.message);
-        //   setloading(false);
-        // }
-      })
-      .catch(function (error) {
-        console.log('post error: ' + error.message);
-        setloading(false);
-        alert(error.message);
-      });
-  };
+  //   const url = `https://www.jeemjam.com/api/createPost`;
 
+  //   // axios({
+  //   //   url,
+  //   //   method: 'POST',
+  //   //   headers: {
+  //   //     'Content-Type': 'multipart/form-data',
+  //   //     Accept: 'application/json',
+  //   //     // Authorization: apiKey,
+  //   //   },
+  //   //   data: formData, // important
+  //   // })
+
+  //   axios({
+  //     method: 'post',
+  //     url: url,
+  //     data: formData,
+  //   })
+  //     .then(result => {
+  //       console.log(
+  //         'Post Incident Report API response',
+  //         result.data.success[0],
+  //       );
+  //     })
+  //     .catch(err => {
+  //       console.log('error is:!...', err);
+
+  //       console.log('error message is:!...', err);
+  //     });
+
+  //   // file.forEach(file => {
+  //   //   formData.append('attachment[]', file);
+  //   // });
+
+  //   console.log(
+  //     'form data in incident report form component is:!...',
+  //     formData,
+  //   );
+  // };
+  // const PostAd = async () => {
+  //   // setloading(true);
+  //   setmsg('');
+  //   // let data = {}
+  //   // data['title'] = title
+  //   // data['category'] = category
+  //   // data['sub_category'] = subcategory
+  //   // data['content'] = content
+  //   // data['phone'] = phone
+  //   // data['whatsapp'] = whatsapp
+  //   // data['country'] = country
+  //   // data['author'] = author
+  //   // data['img'] = imgPayload
+  //   // data['img2'] = img
+  //   // data['img3'] = img
+  //   // data['img4'] = img
+  //   // data['img5'] = img
+  //   let formData = new FormData();
+  //   formData.append('title', 'title');
+  //   formData.append('category', 'date');
+  //   formData.append('sub_category', 'times');
+  //   formData.append('content', 'dropDown');
+  //   formData.append('phone', '0306435355');
+  //   formData.append('whatsapp', '030453243');
+  //   formData.append('country', 'pakistan');
+  //   formData.append('author', 'results');
+  //   formData.append('img', singleFile);
+  //   formData.append('img2', singleFile);
+  //   formData.append('img3', singleFile);
+  //   formData.append('img4', singleFile);
+  //   formData.append('img5', singleFile);
+  //   // singleFile.forEach(file => {
+  //   //   formData.append('img', file);
+  //   // });
+
+  //   console.log('Dataaa===========>>>>>', singleFile);
+
+  //   fetch('https://www.jeemjam.com/api/createPost', {
+  //     Method: 'POST',
+  //     Headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'form-data',
+  //     },
+  //     Body: formData,
+  //   })
+  //     .then(res => {
+  //       // const data = ;
+  //       console.log('post response: ' + res.ok, res.message);
+  //       // consol÷e.log(data.message);
+  //       // if (
+  //       //   res.data.message ==
+  //       //   'Post added and sent for approval .It will be live after getting approved'
+  //       // ) {
+  //       //   setloading(false);
+  //       //   alert(res.data.message);
+  //       //   navigation.navigate('PostAd');
+  //       // } else {
+  //       //   setmsg(res.data.message);
+  //       //   setloading(false);
+  //       // }
+  //     })
+  //     .catch(function (error) {
+  //       console.log('post error: ' + error.message);
+  //       setloading(false);
+  //       alert(error.message);
+  //     });
+  // };
+  async function PostAd() {
+    try {
+      const formData = new FormData();
+
+      formData.append('title', title);
+      formData.append('category', category);
+      formData.append('sub_category', subcategory);
+      formData.append('content', content);
+      formData.append('phone', phone);
+      formData.append('whatsapp', whatsapp);
+      formData.append('country', country);
+      formData.append('author', author);
+      {
+        images.length === 0
+          ? ''
+          : formData.append('img', {
+              name: images[0].name,
+              type: images[0].type,
+              uri: images[0].uri,
+            });
+      }
+      {
+        images2.length === 0
+          ? ''
+          : formData.append('img2', {
+              name: images2[0].name,
+              type: images2[0].type,
+              uri: images2[0].uri,
+            });
+      }
+
+      {
+        images3.length === 0
+          ? ''
+          : formData.append('img3', {
+              name: images3[0].name,
+              type: images3[0].type,
+              uri: images3[0].uri,
+            });
+      }
+      {
+        images4.length === 0
+          ? ''
+          : formData.append('img4', {
+              name: images4[0].name,
+              type: images4[0].type,
+              uri: images4[0].uri,
+            });
+      }
+      {
+        images5.length === 0
+          ? ''
+          : formData.append('img5', {
+              name: images5[0].name,
+              type: images5[0].type,
+              uri: images5[0].uri,
+            });
+      }
+
+      console.log('form data===========>', images);
+      axios
+        .post(`https://www.jeemjam.com/api/createPost`, formData, {
+          headers: {
+            // "authorization": "Bearer jljlkjl",
+            'Content-Type': 'multipart/form-data',
+            Accept: 'application/json',
+          },
+        })
+        .then(results => {
+          console.log('result =================+>', results.data.message);
+          Alert.alert('Success', results.data.message, [
+            // {
+            //   text: 'Cancel',
+            //   onPress: () => console.log('Cancel Pressed'),
+            //   style: 'cancel',
+            // },
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]);
+        })
+        .catch(error => {
+          console.log('error====================>', error);
+        });
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
   const selectFile = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
-    }).then(image => {
-      // let filename1 = image.path.substring(image.path.lastIndexOf('/') + 1);
-      let filename1 = image;
-      // const formdata1 = new FormData();
-      // formdata1.append('FILE', image);
-      console.log('Image1 URL =====> ', filename1);
-      seti1(image.path);
-      setimg(filename1);
-    });
+      compressImageQuality: 0.8,
+      includeBase64: true,
+    })
+      .then(image => {
+        const imagewithoutextension = image.path.split('/').pop();
+        seti1(image.path);
+        setImages(images => [
+          ...images,
+          {
+            uri: image.path,
+            name: imagewithoutextension,
+            type: image.mime,
+          },
+        ]);
+      })
+      .catch(error => console.log(error));
   };
   const selectFile2 = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
-    }).then(image => {
-      // let filename2 = image.path.substring(image.path.lastIndexOf('/') + 1);
-      let filename2 = image;
-      console.log('Image2 URL =====> ', filename2);
-      seti2(image.path);
-      setimg2(filename2);
-    });
+      compressImageQuality: 0.8,
+      includeBase64: true,
+    })
+      .then(image => {
+        const imagewithoutextension = image.path.split('/').pop();
+        seti2(image.path);
+        setImages2(images => [
+          ...images,
+          {
+            uri: image.path,
+            name: imagewithoutextension,
+            type: image.mime,
+          },
+        ]);
+      })
+      .catch(error => console.log(error));
   };
   const selectFile3 = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
-    }).then(image => {
-      // let filename3 = image.path.substring(image.path.lastIndexOf('/') + 1);
-      let filename3 = image;
-      console.log('Image3 URL =====> ', filename3);
-      seti3(image.path);
-      setimg3(filename3);
-    });
+      compressImageQuality: 0.8,
+      includeBase64: true,
+    })
+      .then(image => {
+        const imagewithoutextension = image.path.split('/').pop();
+        seti3(image.path);
+        setImages3(images => [
+          ...images,
+          {
+            uri: image.path,
+            name: imagewithoutextension,
+            type: image.mime,
+          },
+        ]);
+      })
+      .catch(error => console.log(error));
   };
   const selectFile4 = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
-    }).then(image => {
-      // let filename4 = image.path.substring(image.path.lastIndexOf('/') + 1);
-      let filename4 = image;
-      console.log('Image4 URL =====> ', filename4);
-      seti4(image.path);
-      setimg4(filename4);
-    });
+      compressImageQuality: 0.8,
+      includeBase64: true,
+    })
+      .then(image => {
+        const imagewithoutextension = image.path.split('/').pop();
+        seti4(image.path);
+        setImages4(images => [
+          ...images,
+          {
+            uri: image.path,
+            name: imagewithoutextension,
+            type: image.mime,
+          },
+        ]);
+      })
+      .catch(error => console.log(error));
   };
   const selectFile5 = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
-    }).then(image => {
-      // let filename5 = image.path.substring(image.path.lastIndexOf('/') + 1);
-      let filename5 = image;
-      console.log('Image5 URL =====> ', filename5);
-      seti5(image.path);
-      setimg5(filename5);
-    });
+      compressImageQuality: 0.8,
+      includeBase64: true,
+    })
+      .then(image => {
+        const imagewithoutextension = image.path.split('/').pop();
+        seti5(image.path);
+        setImages5(images => [
+          ...images,
+          {
+            uri: image.path,
+            name: imagewithoutextension,
+            type: image.mime,
+          },
+        ]);
+      })
+      .catch(error => console.log(error));
   };
+  // const selectFile = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   }).then(image => {
+  //     const imagewithoutextension = image.path.split('//').pop();
+  //     // console.log(image);
+  //     setSingleFile({
+  //       uri: 'file://storage/emulated/0/Android/data/com.jeemjam/files/Pictures/b3428892-6c70-4def-aed7-b21ef69cae73.jpg',
+  //       type: image.mime,
+  //       name: imagewithoutextension,
+  //     });
+  //     // console.log('image without extention==>', imagewithoutextension);
+  //     // let filename1 = image.path.substring(image.path.lastIndexOf('/') + 1);
+  //     // let filename1 = image;
+  //     // const formdata1 = new FormData();
+  //     // formdata1.append('FILE', image);
+  //     // console.log('Image1 URL =====> ', filename1);
+  //     // console.log('image without extention==>', imagewithoutextension);
+  //     // seti1(image.path);
+  //     // setimg(filename1);
+  //   });
+  // };
+  // const selectFile2 = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   }).then(image => {
+  //     // let filename2 = image.path.substring(image.path.lastIndexOf('/') + 1);
+  //     let filename2 = image;
+  //     console.log('Image2 URL =====> ', filename2);
+  //     seti2(image.path);
+  //     setimg2(filename2);
+  //   });
+  // };
+  // const selectFile3 = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   }).then(image => {
+  //     // let filename3 = image.path.substring(image.path.lastIndexOf('/') + 1);
+  //     let filename3 = image;
+  //     console.log('Image3 URL =====> ', filename3);
+  //     seti3(image.path);
+  //     setimg3(filename3);
+  //   });
+  // };
+  // const selectFile4 = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   }).then(image => {
+  //     // let filename4 = image.path.substring(image.path.lastIndexOf('/') + 1);
+  //     let filename4 = image;
+  //     console.log('Image4 URL =====> ', filename4);
+  //     seti4(image.path);
+  //     setimg4(filename4);
+  //   });
+  // };
+  // const selectFile5 = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   }).then(image => {
+  //     // let filename5 = image.path.substring(image.path.lastIndexOf('/') + 1);
+  //     let filename5 = image;
+  //     console.log('Image5 URL =====> ', filename5);
+  //     seti5(image.path);
+  //     setimg5(filename5);
+  //   });
+  // };
 
   return (
     <View style={styles.container}>

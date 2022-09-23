@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">JeemJam</string>
-    <string name="facebook_app_id">3325770127664803</string>
+   <!-- <string name="facebook_app_id">1226462224797351</string> -->
+
+<string name="facebook_app_id">952173898793678</string>
+<string name="fb_login_protocol_scheme">fb952173898793678</string>
+<string name="facebook_client_token">60139e9f66c0c3fa6f372dcc78be4deb</string>
+
+
 </resources>
