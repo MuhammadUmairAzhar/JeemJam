@@ -12,6 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import {ServicesData} from './Data/Services-Data';
@@ -21,6 +22,7 @@ export default function Home({navigation, route}) {
   const [SelectedCountry, setSelectedCountry] = React.useState(null);
   const [search, setSearch] = React.useState('');
   const [filteredDataSource, setFilteredDataSource] = React.useState([]);
+  console.log('Umair data', filteredDataSource);
   const [masterDataSource, setMasterDataSource] = React.useState([]);
   const [currentCountry, setcurrentCountry] = React.useState([]);
   const [authName, setAuthName] = React.useState();
@@ -29,9 +31,11 @@ export default function Home({navigation, route}) {
   const [jobsData, setJobsData] = React.useState([]);
   // const [serviceData, setServiceData] = React.useState([]);
   const [data, setData] = React.useState([]);
+  console.log('Uamir Umair', data.length);
 
   React.useEffect(() => {
     let {SelectedCountry} = route.params;
+    console.log('For the Image', SelectedCountry);
     setSelectedCountry(SelectedCountry);
     storeData(SelectedCountry?.name);
     console.log('selected country', SelectedCountry?.name);
@@ -39,6 +43,7 @@ export default function Home({navigation, route}) {
   React.useEffect(() => {
     setFilteredDataSource(options);
     setMasterDataSource(options);
+    // saveData();
   }, []);
 
   React.useEffect(() => {
@@ -52,10 +57,7 @@ export default function Home({navigation, route}) {
         // console.log('test===================/=======>>>>', json.getads)
       )
       .catch(error => console.error(error));
-    setTimeout(() => {
-      console.log('Arrayyyyyyyy===>', currentCountry);
-      setLoading(false);
-    }, 4000);
+    setLoading(false);
   }, []);
 
   //Function for search bar filtering categories
@@ -162,6 +164,7 @@ export default function Home({navigation, route}) {
       // error reading value
     }
   };
+
   const storeData = async value => {
     // alert(value);
     try {
@@ -193,6 +196,14 @@ export default function Home({navigation, route}) {
   return (
     <View style={styles.container}>
       <View style={styles.headview}>
+        <FontAwesome5
+          onPress={() => navigation.goBack()}
+          name="arrow-left"
+          size={18}
+          color={'white'}
+          style={styles.topicon}
+          solid
+        />
         <Text style={styles.heading}>Jeem Jam</Text>
         <View style={styles.miniview}>
           <Ionicons
@@ -204,7 +215,9 @@ export default function Home({navigation, route}) {
             onPress={() => navigation.navigate('Profile')}
           />
           <TouchableOpacity onPress={() => navigation.navigate('Countries')}>
-            <Image source={CountryImg?.img} style={styles.topimg} />
+            {CountryImg?.img ? (
+              <Image source={CountryImg?.img} style={styles.topimg} />
+            ) : null}
           </TouchableOpacity>
         </View>
       </View>
@@ -219,6 +232,7 @@ export default function Home({navigation, route}) {
             onChangeText={text => searchFilterFunction(text)}
             value={search}
             placeholder="Search"
+            placeholderTextColor="black"
             underlineColorAndroid="transparent"
           />
         </View>
@@ -269,27 +283,41 @@ export default function Home({navigation, route}) {
                       adsData: data,
                     })
                   }>
-                  <View style={styles.listelem}>
-                    <Image style={styles.img} source={item.img} />
-                    <Text style={styles.listtxt}>{item.name}</Text>
-                  </View>
-                  <View style={styles.icon}>
-                    <Text>
-                      {
-                        data.filter(
-                          u =>
-                            u.category == item.name &&
-                            u.country == SelectedCountry?.name &&
-                            u.aproval == 'yes',
-                        ).length
-                      }
-                    </Text>
-                    <MaterialIcons
-                      name="arrow-forward-ios"
-                      size={25}
-                      color={'black'}
-                      solid
-                    />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      marginTop: 5,
+                    }}>
+                    <View style={styles.listelem}>
+                      <Image style={styles.img} source={item.img} />
+                      <Text style={styles.listtxt}>{item.name}</Text>
+                    </View>
+                    <View style={styles.icon}>
+                      <Text
+                        style={{
+                          color: 'grey',
+                        }}>
+                        {data == '' ? (
+                          <ActivityIndicator size={'small'} />
+                        ) : (
+                          data.filter(
+                            u =>
+                              u.category == item.name &&
+                              u.country == SelectedCountry?.name &&
+                              u.aproval == 'yes',
+                          ).length
+                        )}
+                      </Text>
+                      <MaterialIcons
+                        name="arrow-forward-ios"
+                        size={25}
+                        color={'black'}
+                        solid
+                      />
+                    </View>
                   </View>
                 </TouchableOpacity>
               );
@@ -298,17 +326,25 @@ export default function Home({navigation, route}) {
         )}
 
         <TouchableOpacity onPress={() => navigation.navigate('Countries')}>
-          <View style={[styles.listelem, {marginTop: '10%'}]}>
-            <Image style={styles.img} source={CountryImg?.img} />
+          <View style={[styles.listelem, {marginTop: '8%'}]}>
+            {CountryImg?.img ? (
+              <Image style={styles.img} source={CountryImg?.img} />
+            ) : null}
+
             <Text style={styles.listtxtx}>{CountryImg?.name}</Text>
           </View>
-          <View style={styles.icon}>
+          <View
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 35,
+            }}>
             <MaterialIcons
               name="location-pin"
-              size={25}
+              size={40}
               color={'black'}
               solid
-              style={{marginLeft: '5%'}}
+              style={{marginRight: 4}}
             />
           </View>
         </TouchableOpacity>
@@ -329,6 +365,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#DCDCDC',
     height: 60,
     width: '100%',
+    alignSelf: 'center',
+    borderRadius: 20,
+    marginTop: 10,
+    marginBottom: 3,
   },
   ImageStyle: {
     padding: 10,
@@ -341,12 +381,14 @@ const styles = StyleSheet.create({
   listelem: {
     backgroundColor: '#F0F0F0',
     width: '100%',
+    alignSelf: 'center',
     height: 70,
     borderRadius: 8,
     alignItems: 'center',
     flexDirection: 'row',
     borderBottomColor: '#D3D3D3',
     borderBottomWidth: 1,
+    flexDirection: 'row',
   },
   img: {
     height: 55,
@@ -376,16 +418,16 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   miniview: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   icon: {
-    position: 'relative',
-    left: 310,
-    bottom: '12%',
     flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
   },
   topicon: {
     margin: '1%',
@@ -397,7 +439,7 @@ const styles = StyleSheet.create({
   },
 
   subview: {
-    marginTop: '10%',
+    marginTop: '5%',
   },
   pay: {
     backgroundColor: '#D4F1F4',

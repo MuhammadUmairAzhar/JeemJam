@@ -135,12 +135,9 @@ export default function Signin({navigation}) {
 
   console.log('user data of fblogin', User);
   const storeData = async value => {
-    alert(value);
     try {
       await AsyncStorage.setItem('@auth', value);
-    } catch (e) {
-      // saving error
-    }
+    } catch (e) {}
   };
   return (
     <View style={styles.container}>
@@ -164,12 +161,14 @@ export default function Signin({navigation}) {
           value={phoneno}
           keyboardType="numeric"
           placeholder="ENTER YOUR PHONE NUMBER."
+          placeholderTextColor={'black'}
         />
         <TextInput
           style={styles.input}
           onChangeText={setpassword}
           value={password}
           placeholder="ENTER PASSWORD"
+          placeholderTextColor={'black'}
         />
         <Text style={{marginLeft: 20, color: 'red'}}>{msg}</Text>
 
@@ -182,7 +181,8 @@ export default function Signin({navigation}) {
         <Text
           style={styles.signup}
           onPress={() => navigation.navigate('Signup')}>
-          Dont have an account ? Signup here
+          Dont have an account ?{' '}
+          <Text style={{color: 'red', fontWeight: 'bold'}}>Signup here</Text>
         </Text>
         <Text style={styles.or}>O R</Text>
 
@@ -193,7 +193,7 @@ export default function Signin({navigation}) {
                     <Image source={require('../../../assets/Images/google.png')} style={styles.img} />
                 </TouchableOpacity> */}
 
-        <Button
+        {/* <Button
           title={'continue with google'}
           onPress={() => {
             GoogleSignin.configure({
@@ -225,20 +225,66 @@ export default function Signin({navigation}) {
                 alert('something went wrong', e.message);
               });
           }}
-        />
+        /> */}
+
+        <View
+          style={{
+            margin: '2%',
+            width: '45%',
+            backgroundColor: '#0892d0',
+            height: '12%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 4,
+            elevation: 1,
+          }}>
+          <TouchableOpacity
+            onPress={() => {
+              GoogleSignin.configure({
+                androidClientId:
+                  '239254217574-0r0uak478g98jk0lm5d1rdkmcv839pj8.apps.googleusercontent.com',
+                iosClientId: 'ADD_YOUR_iOS_CLIENT_ID_HERE',
+              });
+              GoogleSignin.hasPlayServices()
+                .then(hasPlayService => {
+                  if (hasPlayService) {
+                    GoogleSignin.signIn()
+                      .then(userInfo => {
+                        let Customer = JSON.stringify(userInfo.user);
+                        var data = JSON.parse(Customer);
+                        let {idToken} = Customer;
+                        console.log('customer data is======');
+                        setUser(Customer);
+                        storeData(data.name);
+                        navigation.navigate('PostAd');
+                      })
+                      .catch(e => {
+                        console.log('ERROR IS: ' + JSON.stringify(e));
+                      });
+                  }
+                })
+                .catch(e => {
+                  console.log('ERROR IS: ' + JSON.stringify(e));
+                });
+            }}>
+            <Text style={{color: 'white'}}>CONTINUE WITH GOOGLE</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* <------------------------------------- LOGIN WITH FACEBOOK -------------------------------------------------------------------> */}
         <View
           style={{
-            margin: '5%',
-            width: '50%',
+            margin: '2%',
+            width: '45%',
             backgroundColor: '#4267B2',
-            height: '15%',
+            height: '12%',
             justifyContent: 'center',
             alignItems: 'center',
+            borderRadius: 4,
+            elevation: 1,
           }}>
           <TouchableOpacity onPress={() => handleLoginFacebook()}>
-            <Text style={{color: 'white'}}>login with facebook</Text>
+            <Text style={{color: 'white'}}>LOGIN WITH FACEBOOK</Text>
           </TouchableOpacity>
           {/* <LoginButton
             onLoginFinished={(error, result) => {
@@ -328,6 +374,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     margin: '5%',
+    color: '#000',
   },
   login: {
     backgroundColor: 'blue',

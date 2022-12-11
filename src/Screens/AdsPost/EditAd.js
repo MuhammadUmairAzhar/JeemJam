@@ -576,7 +576,7 @@ export default function EditAd({navigation, route}) {
             style={styles.input}
             onChangeText={setcountry}
             value={country}
-            placeholder="ENTER COUNTRY"
+            placeholder="CHOOSE COUNTRY"
             placeholderTextColor={'black'}
             color={'black'}
           />

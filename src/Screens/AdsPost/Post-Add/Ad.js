@@ -58,127 +58,6 @@ export default function Ad({navigation}) {
   const [img3, setimg3] = React.useState({});
   const [img4, setimg4] = React.useState({});
   const [img5, setimg5] = React.useState({});
-
-  // const PostAd = async () => {
-  //   let formData = new FormData();
-
-  //   formData.append('title', 'incidentReport');
-  //   formData.append('category', 'date');
-  //   formData.append('sub_category', 'times');
-  //   formData.append('content', 'dropDown');
-  //   formData.append('phone', 'multiLineText');
-  //   formData.append('whatsapp', 'location');
-  //   formData.append('country', 'actions');
-  //   formData.append('result', 'results');
-  //   formData.append('longitude', 'long');
-  //   formData.append('img', singleFile);
-
-  //   const url = `https://www.jeemjam.com/api/createPost`;
-
-  //   // axios({
-  //   //   url,
-  //   //   method: 'POST',
-  //   //   headers: {
-  //   //     'Content-Type': 'multipart/form-data',
-  //   //     Accept: 'application/json',
-  //   //     // Authorization: apiKey,
-  //   //   },
-  //   //   data: formData, // important
-  //   // })
-
-  //   axios({
-  //     method: 'post',
-  //     url: url,
-  //     data: formData,
-  //   })
-  //     .then(result => {
-  //       console.log(
-  //         'Post Incident Report API response',
-  //         result.data.success[0],
-  //       );
-  //     })
-  //     .catch(err => {
-  //       console.log('error is:!...', err);
-
-  //       console.log('error message is:!...', err);
-  //     });
-
-  //   // file.forEach(file => {
-  //   //   formData.append('attachment[]', file);
-  //   // });
-
-  //   console.log(
-  //     'form data in incident report form component is:!...',
-  //     formData,
-  //   );
-  // };
-  // const PostAd = async () => {
-  //   // setloading(true);
-  //   setmsg('');
-  //   // let data = {}
-  //   // data['title'] = title
-  //   // data['category'] = category
-  //   // data['sub_category'] = subcategory
-  //   // data['content'] = content
-  //   // data['phone'] = phone
-  //   // data['whatsapp'] = whatsapp
-  //   // data['country'] = country
-  //   // data['author'] = author
-  //   // data['img'] = imgPayload
-  //   // data['img2'] = img
-  //   // data['img3'] = img
-  //   // data['img4'] = img
-  //   // data['img5'] = img
-  //   let formData = new FormData();
-  //   formData.append('title', 'title');
-  //   formData.append('category', 'date');
-  //   formData.append('sub_category', 'times');
-  //   formData.append('content', 'dropDown');
-  //   formData.append('phone', '0306435355');
-  //   formData.append('whatsapp', '030453243');
-  //   formData.append('country', 'pakistan');
-  //   formData.append('author', 'results');
-  //   formData.append('img', singleFile);
-  //   formData.append('img2', singleFile);
-  //   formData.append('img3', singleFile);
-  //   formData.append('img4', singleFile);
-  //   formData.append('img5', singleFile);
-  //   // singleFile.forEach(file => {
-  //   //   formData.append('img', file);
-  //   // });
-
-  //   console.log('Dataaa===========>>>>>', singleFile);
-
-  //   fetch('https://www.jeemjam.com/api/createPost', {
-  //     Method: 'POST',
-  //     Headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'form-data',
-  //     },
-  //     Body: formData,
-  //   })
-  //     .then(res => {
-  //       // const data = ;
-  //       console.log('post response: ' + res.ok, res.message);
-  //       // consol÷e.log(data.message);
-  //       // if (
-  //       //   res.data.message ==
-  //       //   'Post added and sent for approval .It will be live after getting approved'
-  //       // ) {
-  //       //   setloading(false);
-  //       //   alert(res.data.message);
-  //       //   navigation.navigate('PostAd');
-  //       // } else {
-  //       //   setmsg(res.data.message);
-  //       //   setloading(false);
-  //       // }
-  //     })
-  //     .catch(function (error) {
-  //       console.log('post error: ' + error.message);
-  //       setloading(false);
-  //       alert(error.message);
-  //     });
-  // };
   async function PostAd() {
     try {
       const formData = new FormData();
@@ -249,13 +128,14 @@ export default function Ad({navigation}) {
         })
         .then(results => {
           console.log('result =================+>', results.data.message);
-          Alert.alert('Success', results.data.message, [
+          Alert.alert('Success', 'YOUR POST HAS BEEN SUBMITTED SUCCESSFULLY', [
             // {
             //   text: 'Cancel',
             //   onPress: () => console.log('Cancel Pressed'),
             //   style: 'cancel',
             // },
             {text: 'OK', onPress: () => console.log('OK Pressed')},
+            // Alert.alert('Note', 'YOUR POST HAS BEEN SUBMITTED SUCCESSFULLY'),
           ]);
         })
         .catch(error => {
@@ -376,82 +256,12 @@ export default function Ad({navigation}) {
       })
       .catch(error => console.log(error));
   };
-  // const selectFile = () => {
-  //   ImagePicker.openPicker({
-  //     width: 300,
-  //     height: 400,
-  //     cropping: true,
-  //   }).then(image => {
-  //     const imagewithoutextension = image.path.split('//').pop();
-  //     // console.log(image);
-  //     setSingleFile({
-  //       uri: 'file://storage/emulated/0/Android/data/com.jeemjam/files/Pictures/b3428892-6c70-4def-aed7-b21ef69cae73.jpg',
-  //       type: image.mime,
-  //       name: imagewithoutextension,
-  //     });
-  //     // console.log('image without extention==>', imagewithoutextension);
-  //     // let filename1 = image.path.substring(image.path.lastIndexOf('/') + 1);
-  //     // let filename1 = image;
-  //     // const formdata1 = new FormData();
-  //     // formdata1.append('FILE', image);
-  //     // console.log('Image1 URL =====> ', filename1);
-  //     // console.log('image without extention==>', imagewithoutextension);
-  //     // seti1(image.path);
-  //     // setimg(filename1);
-  //   });
-  // };
-  // const selectFile2 = () => {
-  //   ImagePicker.openPicker({
-  //     width: 300,
-  //     height: 400,
-  //     cropping: true,
-  //   }).then(image => {
-  //     // let filename2 = image.path.substring(image.path.lastIndexOf('/') + 1);
-  //     let filename2 = image;
-  //     console.log('Image2 URL =====> ', filename2);
-  //     seti2(image.path);
-  //     setimg2(filename2);
-  //   });
-  // };
-  // const selectFile3 = () => {
-  //   ImagePicker.openPicker({
-  //     width: 300,
-  //     height: 400,
-  //     cropping: true,
-  //   }).then(image => {
-  //     // let filename3 = image.path.substring(image.path.lastIndexOf('/') + 1);
-  //     let filename3 = image;
-  //     console.log('Image3 URL =====> ', filename3);
-  //     seti3(image.path);
-  //     setimg3(filename3);
-  //   });
-  // };
-  // const selectFile4 = () => {
-  //   ImagePicker.openPicker({
-  //     width: 300,
-  //     height: 400,
-  //     cropping: true,
-  //   }).then(image => {
-  //     // let filename4 = image.path.substring(image.path.lastIndexOf('/') + 1);
-  //     let filename4 = image;
-  //     console.log('Image4 URL =====> ', filename4);
-  //     seti4(image.path);
-  //     setimg4(filename4);
-  //   });
-  // };
-  // const selectFile5 = () => {
-  //   ImagePicker.openPicker({
-  //     width: 300,
-  //     height: 400,
-  //     cropping: true,
-  //   }).then(image => {
-  //     // let filename5 = image.path.substring(image.path.lastIndexOf('/') + 1);
-  //     let filename5 = image;
-  //     console.log('Image5 URL =====> ', filename5);
-  //     seti5(image.path);
-  //     setimg5(filename5);
-  //   });
-  // };
+
+  const Validationfunc = () => {
+    if (!title || !author || !country || !subcategory || !phone || !whatsapp) {
+      Alert.alert('Note', 'Enter All the fields .. ');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -497,14 +307,38 @@ export default function Ad({navigation}) {
             placeholderTextColor={'black'}
             color={'black'}
           />
-          <TextInput
-            style={styles.input}
-            onChangeText={setcountry}
-            value={country}
-            placeholder="ENTER COUNTRY"
-            placeholderTextColor={'black'}
-            color={'black'}
-          />
+          <Picker
+            selectedValue={country}
+            dropdownIconColor="black"
+            placeholderTextColor={'#000'}
+            placeholder={'CHOOSE COUNTRY'}
+            style={styles.dropdown}
+            onValueChange={item => setcountry(item)}>
+            <Picker.Item
+              label="Choose Country"
+              value=" "
+              style={styles.dropdowntxt}
+            />
+            <Picker.Item label="UAE" value="UAE" />
+            <Picker.Item label="Abu Dhabi" value="Abu Dhabi" />
+            <Picker.Item label="Ajman Emirates" value="Ajman Emirates" />
+            <Picker.Item label="Dubai Emirate" value="Dubai Emirate" />
+            <Picker.Item label="Fujairah" value="Fujairah" />
+            <Picker.Item label="Ras Al-Khaima" value="Ras Al-Khaima" />
+            <Picker.Item label="Sharjah Emirate" value="Sharjah Emirate" />
+            <Picker.Item label="Umm Al Quwain" value="Umm Al Quwain" />
+            <Picker.Item label="Iraq" value="Iraq" />
+            <Picker.Item label="Baghdad" value="Al Ain" />
+            <Picker.Item label="Kuwait" value="Kuwait" />
+            <Picker.Item label="Morroco" value="Morroco" />
+            <Picker.Item label="Oman" value="Oman" />
+            <Picker.Item label="Saudia" value="Saudia" />
+            <Picker.Item label="Bahrain" value="Bahrain" />
+            <Picker.Item label="Pakistan" value="Pakistan" />
+            <Picker.Item label="Egypt" value="Egypt" />
+            <Picker.Item label="Algeria" value="Algeria" />
+            <Picker.Item label="Tunisia" value="Tunisia" />
+          </Picker>
           <Picker
             selectedValue={category}
             dropdownIconColor="black"
@@ -1564,20 +1398,29 @@ export default function Ad({navigation}) {
             placeholderTextColor={'black'}
             color={'black'}
           />
-          <TextInput
-            style={styles.input}
-            onChangeText={setcontent}
-            value={content}
-            multiline={true}
-            underlineColorAndroid="transparent"
-            placeholder="ENTER CONTENT"
-            placeholderTextColor={'black'}
-            color={'black'}
-          />
+          <View>
+            <TextInput
+              style={[styles.input, {height: 150, borderWidth: 1}]}
+              onChangeText={setcontent}
+              value={content}
+              multiline={true}
+              underlineColorAndroid="transparent"
+              placeholder="ENTER CONTENT"
+              placeholderTextColor={'black'}
+              color={'black'}
+            />
+            <Text style={{color: '#000', marginLeft: 20}}>
+              maximum 500 characters
+            </Text>
+          </View>
 
           <Text style={{color: 'red'}}>{msg}</Text>
           <Loading visible={loading} />
-          <TouchableOpacity style={styles.login} onPress={PostAd}>
+          <TouchableOpacity
+            style={styles.login}
+            onPress={() => {
+              PostAd, Validationfunc();
+            }}>
             <Text style={styles.logintxt}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
@@ -1607,6 +1450,7 @@ const styles = StyleSheet.create({
   dropdown: {
     margin: '3%',
     fontSize: 18,
+    color: '#000',
   },
   listelem: {
     backgroundColor: '#F0F0F0',

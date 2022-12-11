@@ -89,6 +89,7 @@ export default function Services({navigation, route}) {
             onChangeText={text => searchFilterFunction(text)}
             value={search}
             placeholder="Search"
+            placeholderTextColor={'black'}
             underlineColorAndroid="transparent"
           />
         </View>
@@ -109,7 +110,35 @@ export default function Services({navigation, route}) {
                     selCountry: SelectedCountry1,
                   })
                 }>
-                <View style={styles.listelem}>
+                <View style={styles.NEW}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Image style={styles.img} source={item.img} />
+                    <Text style={styles.listtxt}>{item.name}</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text
+                      style={{
+                        color: '#808080',
+                        marginRight: 10,
+                      }}>
+                      {
+                        adsData.filter(
+                          u =>
+                            u.sub_category == item.name &&
+                            u.country == SelectedCountry1.name &&
+                            u.aproval == 'yes',
+                        ).length
+                      }
+                    </Text>
+                    <MaterialIcons
+                      name="arrow-forward-ios"
+                      size={25}
+                      color={'black'}
+                      solid
+                    />
+                  </View>
+                </View>
+                {/* <View style={styles.listelem}>
                   <Image style={styles.img} source={item.img} />
                   <Text style={styles.listtxt}>{item.name}</Text>
                 </View>
@@ -130,7 +159,7 @@ export default function Services({navigation, route}) {
                     color={'black'}
                     solid
                   />
-                </View>
+                </View> */}
               </TouchableOpacity>
             );
           })}
@@ -262,5 +291,14 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     marginTop: '13%',
+  },
+  NEW: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+    alignSelf: 'center',
+    paddingVertical: 10,
+    marginTop: 6,
+    backgroundColor: '#F0F0F0',
   },
 });

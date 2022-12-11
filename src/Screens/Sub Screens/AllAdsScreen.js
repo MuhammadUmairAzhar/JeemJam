@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FastImage from 'react-native-fast-image';
 
 export default function AllAdsScreen({navigation, route}) {
   const [isLoading, setLoading] = React.useState(true);
@@ -98,10 +99,51 @@ export default function AllAdsScreen({navigation, route}) {
                 onRefresh={fetchCurrentCountryData}
               />
             }
-            renderItem={({item, index}) => (
-              <View key={index} style={styles.subview}>
-                <View style={{padding: 15}}>
-                  <View style={styles.listelem}>
+            renderItem={({item, index}) => {
+              console.log('Umair Images', item?.img);
+              return (
+                <View key={index} style={styles.subview}>
+                  <View style={{padding: 8}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('ShowingInages', {
+                            selectedImage: item,
+                          })
+                        }>
+                        {/* {item.img ? (
+                          <Image style={styles.img} source={{uri: item.img}} />
+                        ) : (
+                          <Text>No Image</Text>
+                        )} */}
+                        <FastImage
+                          style={styles.img}
+                          source={{uri: item.img}}
+                        />
+                      </TouchableOpacity>
+                      <View>
+                        <Text style={styles.headingtxt}>{item.title}</Text>
+                        <Text style={styles.destxt}>{item.country}</Text>
+                        <TouchableOpacity
+                          onPress={() =>
+                            navigation.navigate('DetailsScreen', {
+                              selectedItem: item,
+                            })
+                          }>
+                          <Text
+                            style={{
+                              color: 'blue',
+                              fontWeight: '600',
+                              fontSize: 16,
+                              marginLeft: '1%',
+                            }}>
+                            More Show{' '}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+
+                    {/* <View style={styles.listelem}>
                     <TouchableOpacity
                       onPress={() =>
                         navigation.navigate('ShowingInages', {
@@ -130,10 +172,11 @@ export default function AllAdsScreen({navigation, route}) {
                         </Text>
                       </TouchableOpacity>
                     </View>
+                  </View> */}
                   </View>
                 </View>
-              </View>
-            )}
+              );
+            }}
           />
         )}
       </View>
@@ -162,7 +205,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listelem: {
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     width: '100%',
     height: '30%',
     borderRadius: 8,
@@ -238,6 +281,7 @@ const styles = StyleSheet.create({
 
   subview: {
     marginTop: '5%',
+    elevation: 1,
   },
   pay: {
     backgroundColor: '#D4F1F4',

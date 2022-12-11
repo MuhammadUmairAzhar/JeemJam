@@ -8,6 +8,7 @@ import {
   Image,
   Touchable,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -25,8 +26,6 @@ export default function Mobile({navigation, route}) {
     setMasterDataSource(Mobiles);
   }, []);
   let {SelectedCountry, adsData} = route.params;
-
-  // console.log('user test is mobile data', mobileData);
 
   React.useEffect(() => {
     setSelectedCountry(SelectedCountry);
@@ -125,6 +124,7 @@ export default function Mobile({navigation, route}) {
             onChangeText={text => searchFilterFunction(text)}
             value={search}
             placeholder="Search"
+            placeholderTextColor={'#000'}
             underlineColorAndroid="transparent"
           />
         </View>
@@ -136,15 +136,6 @@ export default function Mobile({navigation, route}) {
               name: item.name,
               country: SelectedCountry1,
             };
-            // {
-            //   mobileData.map((val, index) => {
-            //     if (val.name == item.name) {
-            //       text = val.name.length;
-            //       // setData(val.name.length);
-            //       console.log(val.name.length);
-            //     }
-            //   });
-            // }
             return (
               <TouchableOpacity
                 key={index}
@@ -155,31 +146,39 @@ export default function Mobile({navigation, route}) {
                     selCountry: SelectedCountry1,
                   })
                 }>
-                <View style={styles.listelem}>
+                <View style={styles.NEW}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Image style={styles.img} source={item.img} />
+                    <Text style={styles.listtxt}>{item.name}</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text
+                      style={{
+                        color: '#808080',
+                        marginRight: 10,
+                      }}>
+                      {
+                        adsData.filter(
+                          u =>
+                            u.sub_category == item.name &&
+                            u.country == SelectedCountry1.name &&
+                            u.aproval == 'yes',
+                        ).length
+                      }
+                    </Text>
+                    <MaterialIcons
+                      name="arrow-forward-ios"
+                      size={25}
+                      color={'black'}
+                      solid
+                    />
+                  </View>
+                </View>
+                {/* <View style={styles.listelem}>
                   <Image style={styles.img} source={item.img} />
                   <Text style={styles.listtxt}>{item.name}</Text>
                 </View>
                 <View style={styles.icon}>
-                  {/* {mobileData.filter((u => u.category == item.name)=>{
-  <Text></Text>
-                  })}
-                 */}
-                  {/* {mobileData.filter(u => {
-                    u.category == item.name ? (
-                      <Text>{u.category.length}</Text>
-                    ) : (
-                      <Text>0</Text>
-                    );
-                  })} */}
-                  {/* {mobileData.map(val => {
-                    return val.sub_category == item.name ? (
-                      <Text>{val.sub_category.length}</Text>
-                    ) : (
-                      <Text>{''}</Text>
-                    );
-
-                    // <div className="user">{user}</div>
-                  })} */}
                   <Text>
                     {
                       adsData.filter(
@@ -196,7 +195,7 @@ export default function Mobile({navigation, route}) {
                     color={'black'}
                     solid
                   />
-                </View>
+                </View> */}
               </TouchableOpacity>
             );
           })}
@@ -243,7 +242,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listelem: {
-    backgroundColor: '#F0F0F0',
     width: '100%',
     height: 70,
     borderRadius: 8,
@@ -251,6 +249,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomColor: '#D3D3D3',
     borderBottomWidth: 1,
+    backgroundColor: '#F0F0F0',
   },
   img: {
     height: 40,
@@ -327,5 +326,14 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     marginTop: '13%',
+  },
+  NEW: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignSelf: 'center',
+    paddingVertical: 10,
+    marginTop: 6,
+    backgroundColor: '#F0F0F0',
   },
 });
